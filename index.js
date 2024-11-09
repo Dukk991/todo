@@ -1,17 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import { todoRouter } from './routes/todoRouter.js';
+import { userRouter } from './routes/userRouter.js';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+dotenv.config()
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const port = process.env.PORT
+
+const app = express();
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+app.use('/', todoRouter)
+app.use('/user', userRouter)
+
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500
+    res.status(statusCode).json({error: err.message})
+})
+
+app.listen(port)
