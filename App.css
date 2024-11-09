@@ -1,0 +1,17 @@
+#container {
+  padding: 20px;
+  font-weight: 500;
+  font-family: system-ui;
+}
+
+li {
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-family: system-ui;
+}
+
+.delete-button {
+  margin-left: 16px;
+  font-weight: 500;
+  font-family: system-ui;
+}
